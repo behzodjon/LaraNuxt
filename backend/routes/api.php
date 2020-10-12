@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,8 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('auth')->group(static function(){
-Route::post('login','Api\AuthController@login');
-Route::post('logout','Api\AuthController@logout')->middleware('auth:api');
-Route::get('user','Api\AuthController@user')->middleware('auth:api');
+Route::get('users', function () {
+    return User::all();
+});
+
+Route::prefix('auth')->group(static function () {
+    Route::post('login', 'Api\AuthController@login');
+    Route::post('logout', 'Api\AuthController@logout')->middleware('auth:api');
+    Route::get('user', 'Api\AuthController@user')->middleware('auth:api');
 });

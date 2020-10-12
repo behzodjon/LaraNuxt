@@ -328,7 +328,7 @@ export default {
   methods: {
     async onSubmit() {
       try {
-        await this.$axios.post("/api/auth/register", {
+        await this.$axios.post("/auth/register", {
           name: this.form.name,
           email: this.form.email,
           password: this.form.password,

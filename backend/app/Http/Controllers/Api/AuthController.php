@@ -12,28 +12,17 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        if ($request->has('code')) {
-            $request->validate([
-                'code' => 'required|string'
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
+        if (!Auth::attempt($request->only('email', 'password'))) {
+            throw ValidationException::withMessages([
+                'auth' => 'No user found with this data!'
             ]);
-            $user = User::where('login_code', $request->get('code'))->first();
-            if (!$user) {
-                throw ValidationException::withMessages([
-                    'auth' => 'No user found with this data!'
-                ]);
-            }
-        } else {
-            $request->validate([
-                'email' => 'required|email',
-                'password' => 'required|string',
-            ]);
-            if (!Auth::attempt($request->only('email', 'password'))) {
-                throw ValidationException::withMessages([
-                    'auth' => 'No user found with this data!'
-                ]);
-            }
-            $user = auth()->user();
         }
+        $user = auth()->user();
+
         $token = $user->createToken('Laravel Password GRAND client');
         return response()->json([
             'token' => $token->accessToken
@@ -50,7 +39,7 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
-        
+
         return response([
             'success' => true
         ]);
