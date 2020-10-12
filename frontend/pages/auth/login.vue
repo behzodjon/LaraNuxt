@@ -44,7 +44,6 @@ export default {
   methods: {
     async onSubmit() {
       try {
-        await this.$axios.$get("/sanctum/csrf-cookie");
         await this.$auth.loginWith("local", { data: this.form });
       } catch (error) {
         console.log(error);

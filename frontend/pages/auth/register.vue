@@ -328,8 +328,7 @@ export default {
   methods: {
     async onSubmit() {
       try {
-        await this.$axios.$get("sanctum/csrf-cookie");
-        await this.$axios.post("/api/register", {
+        await this.$axios.post("/api/auth/register", {
           name: this.form.name,
           email: this.form.email,
           password: this.form.password,
