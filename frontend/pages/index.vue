@@ -8,7 +8,7 @@
 <script>
 export default {
   created(){
-    this.$axios.$get('/users').then(res=>{
+    this.$axios.$get('/api/users').then(res=>{
       console.log(res)
     })
   }

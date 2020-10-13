@@ -19,6 +19,8 @@ Route::get('users', function () {
     return User::all();
 });
 
+Route::post('register','Api\AuthController@register');
+
 Route::prefix('auth')->group(static function () {
     Route::post('login', 'Api\AuthController@login');
     Route::post('logout', 'Api\AuthController@logout')->middleware('auth:api');
